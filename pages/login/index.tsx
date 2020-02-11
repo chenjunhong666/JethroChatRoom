@@ -5,7 +5,8 @@ import './login.less'
 import api from '../../api'
 import router from 'next/router';
 import routerlist from '../../lib/routerlist'
-
+import {useDispatch } from 'react-redux'
+import {actionType} from '../../redux/actionType'
 
 const validUserNameFunction = (rule, value: string, callback) => {
   if (value.length < 5 || value.length > 16) {
@@ -23,12 +24,18 @@ const validPasswordFunction = (rule, value, callback) => {
 const LoginPage = (props) => {
   const form = props.form;
   const { getFieldDecorator } = form;
+  const dispatch = useDispatch();
   const handleSubmit = e => {
     e.preventDefault();
     form.validateFields((err, values) => {
       if (!err) {
         api.auth.login(values).then((res) => {
           if (res && res.code == 0) {
+            dispatch({
+              type : actionType,
+              userID : res.userID,
+              username : res.username
+            })
             router.push(routerlist.index);
           }
         });

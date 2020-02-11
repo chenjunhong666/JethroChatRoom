@@ -1,7 +1,8 @@
 export default {
     method: 'get',
     // 基础url前缀
-    baseUrl: "/api",
+    baseUrl: "/api/",
+    //  baseUrl: "http://localhost:3001/",
     // 请求头信息
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'

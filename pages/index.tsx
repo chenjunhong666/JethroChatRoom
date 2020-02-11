@@ -1,44 +1,37 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react';
 import { withRedux } from '../lib/redux'
-import useInterval from '../lib/useInterval'
-import Clock from '../components/clock'
-import Counter from '../components/counter'
-// import api from '../api'
-import useLogin from '../lib/useLogin'
+import { Button, Select } from 'antd'
+import router from 'next/router';
+import routerlist from '../lib/routerlist'
+import api from '../api'
 
-
-const IndexPage = () => {
-  // Tick the time every second
-  let isLogin = useLogin();
-  const dispatch = useDispatch()
-  useInterval(() => {
-    dispatch({
-      type: 'TICK',
-      light: true,
-      lastUpdate: Date.now(),
-    })
-  }, 1000)
+const IndexPage = (props) => {
+  const { Option } = Select;
+  const [roomValue, setRoomValue] = useState("1");
   return (
-    isLogin ?
-      <>
-        <Clock />
-        <Counter />
-      </> : 
-      <div></div>
+    <div>
+      <Select defaultValue="1" style={{ width: 120 }} onChange={(value) => {
+        setRoomValue(value)
+      }}>
+        <Option value="1">1号聊天室</Option>
+        <Option value="2">2号聊天室</Option>
+        <Option value="3">3号聊天室</Option>
+      </Select>
+      <Button type="primary" onClick={() => {
+        router.push({
+          pathname: routerlist.chatroom,
+          query: { roomValue: roomValue }
+        });
+      }}>
+        进入
+        </Button>
+    </div>
   )
 }
 
 IndexPage.getInitialProps = async ({ reduxStore }) => {
-  // Tick the time once, so we'll have a
-  // valid time before first render
-  const { dispatch } = reduxStore
-  dispatch({
-    type: 'TICK',
-    light: typeof window === 'object',
-    lastUpdate: Date.now(),
-  });
-
+  // let data = await api.auth.info();
+  // console.log(data)
   return {}
 }
 

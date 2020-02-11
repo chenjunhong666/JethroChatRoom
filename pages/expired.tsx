@@ -6,7 +6,7 @@ class expired extends Component<any> {
     UNSAFE_componentWillMount() {
         this.timer = setInterval(() => {
             router.push('/login');
-        }, 3000)
+        }, 0)
     }
     componentWillUnmount() {
         clearInterval(this.timer)

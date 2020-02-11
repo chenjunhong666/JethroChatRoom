@@ -27,3 +27,10 @@ export const judge = () => {
 
     })
 }
+
+export const info = () => {
+    return axios({
+        url: 'info',
+        method: 'post',
+    })
+}
