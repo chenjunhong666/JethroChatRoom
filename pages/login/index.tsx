@@ -34,7 +34,7 @@ const LoginPage = (props) => {
             dispatch({
               type : actionType,
               userID : res.userID,
-              username : res.username
+              userName : res.username
             })
             router.push(routerlist.index);
           }
@@ -43,8 +43,8 @@ const LoginPage = (props) => {
     });
   };
   return (
-    <Form onSubmit={handleSubmit} className="login_container">
-      <Form.Item className="form_item">
+    <Form onSubmit={handleSubmit} className="login-container">
+      <Form.Item className="login-form-item">
         {getFieldDecorator('username', {
           rules: [{ required: true, message: '请输入用户名' }, { validator: validUserNameFunction }],
           validateTrigger: 'onSubmit'
@@ -55,7 +55,7 @@ const LoginPage = (props) => {
           />,
         )}
       </Form.Item>
-      <Form.Item className="form_item">
+      <Form.Item className="login-form-item">
         {getFieldDecorator('password', {
           rules: [{ required: true, message: '请输入密码' }, { validator: validPasswordFunction }],
           validateTrigger: 'onSubmit'
@@ -67,7 +67,7 @@ const LoginPage = (props) => {
           />,
         )}
       </Form.Item>
-      <Form.Item className="form_item">
+      <Form.Item className="login-form-item">
         {/* {getFieldDecorator('remember', {
           valuePropName: 'checked',
           initialValue: true,
@@ -75,7 +75,7 @@ const LoginPage = (props) => {
         {/* <a className="login-form-forgot" href="">
           忘记密码
         </a> */}
-        <Button type="primary" htmlType="submit" className="button">
+        <Button type="primary" htmlType="submit" className="login-button">
           登录
         </Button>
         {/* Or <a href="">注册</a> */}
@@ -83,17 +83,4 @@ const LoginPage = (props) => {
     </Form>
   );
 }
-
-LoginPage.getInitialProps = ({ reduxStore }) => {
-  // Tick the time once, so we'll have a
-  // valid time before first render
-  const { dispatch } = reduxStore
-  dispatch({
-    type: 'TICK',
-    light: typeof window === 'object',
-    lastUpdate: Date.now(),
-  })
-  return {}
-}
-
 export default withRedux(Form.create({ name: 'login' })(LoginPage))

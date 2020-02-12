@@ -18,7 +18,7 @@ const useLogin = () => {
     const setInfo = ({ username, userID }) =>
         dispatch({
             type: actionType.SETUSERINFO,
-            username: username,
+            userName: username,
             userID: userID
         })
     const [innerIsLogin, setInnerLogin] = useState(useSelector(state => state.isLogin));

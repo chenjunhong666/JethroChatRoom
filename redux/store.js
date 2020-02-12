@@ -3,7 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import {actionType} from './actionType'
 const initialState = {
   isLogin: false,
-  username: "",
+  userName: "",
   userID:"",
   lastLoginDate: Date.now(),
 }
@@ -27,7 +27,7 @@ const reducer = (state = initialState, action) => {
         case actionType.SETUSERINFO:
           return {
             ...state,
-            username:action.username,
+            userName:action.userName,
             userID:action.userID
           }
     default:
