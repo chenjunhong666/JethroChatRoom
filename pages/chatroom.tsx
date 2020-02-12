@@ -36,16 +36,15 @@ const IndexPage = ({ router }) => {
         } else {
             router.push(routerlist.notFind);
         }
-        if (userID != "" && !socket) {
+        if (userID != "") {
             let s = io.connect('http://localhost:3001')
             setSocket(s);
             s.on('connect', (data) => {
                 // console.log('connect')
             });
             s.emit('enter', { userID, roomValue }, (data) => {
-                console.log(roomValue)
                 if (data == 'error') {
-                    // console.log("error")
+                    console.log("强制远程下线")
                 } else {
                     // console.log('enter');
                 }
