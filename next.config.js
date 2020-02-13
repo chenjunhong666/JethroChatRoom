@@ -1,6 +1,7 @@
 /* eslint-disable */
 const withLess = require('@zeit/next-less')
 const lessToJS = require('less-vars-to-js')
+const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const fs = require('fs')
 const path = require('path')
 
@@ -35,6 +36,11 @@ module.exports = withLess({
         use: 'null-loader',
       })
     }
+    config.plugins.push(
+      new FilterWarningsPlugin({
+          exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
+      })
+  );
     return config
   },
 })
