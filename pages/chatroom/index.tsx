@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { withRouter } from 'next/router'
-import { withRedux } from '../lib/redux'
+import { withRedux } from '../../lib/redux'
 import io from 'socket.io-client'
-import useLogin from '../lib/useLogin'
-import { Button, message } from 'antd'
-import routerlist from '../lib/routerlist'
+import useLogin from '../../lib/useLogin'
+import { Button, message, Layout } from 'antd'
+import routerlist from '../../lib/routerlist'
 import { useSelector, useDispatch } from 'react-redux'
-import MessageInput from '../components/messageInput'
-import Messages from '../components/messages'
-import { MessageInfo, MsgType } from '../lib/interfaces'
+import MessageInput from '../../components/messageInput'
+import Messages from '../../components/messages'
+import { MessageInfo, MsgType } from '../../lib/interfaces'
+import './chatroom.less'
+const { Header, Footer, Sider, Content } = Layout;
 
 const IndexPage = ({ router }) => {
     let roomValue = ""
@@ -18,20 +20,20 @@ const IndexPage = ({ router }) => {
     const userName = useSelector(state => state.userName)
     const [messages, setMessage] = useState([])
     const preMessages = useRef(messages);
-    const addMessage = (message :MessageInfo)=>{
+    const addMessage = (message: MessageInfo) => {
         preMessages.current.push(message)
         setMessage([...preMessages.current]);
     }
     const onSubmit = (messageContent: string) => {
         socket.emit('message', messageContent, (data) => {
-            let message: MessageInfo = { msgType: MsgType.MY, msgContent: messageContent,userName,date : Date.now() }
+            let message: MessageInfo = { msgType: MsgType.MY, msgContent: messageContent, userName, date: data }
             addMessage(message)
         });
         return 1;
     }
 
     useEffect(() => {
-        if (router && router.query && router.query.roomValue && router.query.roomValue!="") {
+        if (router && router.query && router.query.roomValue && router.query.roomValue != "") {
             roomValue = router.query.roomValue
         } else {
             router.push(routerlist.notFind);
@@ -50,23 +52,23 @@ const IndexPage = ({ router }) => {
                 }
             });
             s.on('new', (data) => {
-                let message: MessageInfo = { msgType: MsgType.SYSTEM, msgContent: "进入聊天室",userName:data.userName,date:data.date };
+                let message: MessageInfo = { msgType: MsgType.SYSTEM, msgContent: "进入聊天室", userName: data.userName, date: data.date };
                 addMessage(message)
             });
             s.on('quit', (data) => {
-                let message: MessageInfo = { msgType: MsgType.SYSTEM, msgContent: "退出聊天室",userName:data.userName,date:data.date };
+                let message: MessageInfo = { msgType: MsgType.SYSTEM, msgContent: "退出聊天室", userName: data.userName, date: data.date };
                 addMessage(message)
             });
             s.on('disconnect', (data) => {
-                let message: MessageInfo = { msgType: MsgType.SYSTEM, msgContent: "退出聊天室",userName,date:Date.now() };
+                let message: MessageInfo = { msgType: MsgType.SYSTEM, msgContent: "退出聊天室", userName, date: new Date().toLocaleTimeString() };
                 addMessage(message)
             });
-            s.on('forceOut',()=>{
+            s.on('forceOut', () => {
                 alert("强制下线")
                 router.push(routerlist.index)
             })
             s.on('message', (data) => {
-                let message: MessageInfo = { msgType: MsgType.OTHER, msgContent: data.message,userName:data.userName,date:data.date };
+                let message: MessageInfo = { msgType: MsgType.OTHER, msgContent: data.message, userName: data.userName, date: data.date };
                 addMessage(message)
             });
             return () => s.disconnect();
@@ -74,9 +76,16 @@ const IndexPage = ({ router }) => {
     }, [userID]);
     return (
         (isLogin) ?
-            <div>
-                <Messages messages={messages}></Messages>
-                <MessageInput onSubmit={onSubmit} />
+            <div className='chatroom-bg'>
+                {/* <div className="chatroom-header">
+                    header
+                </div> */}
+                <div className="chatroom-content">
+                    <Messages messages={messages} />
+                </div>
+                <div className="chatroom-footer">
+                    <MessageInput onSubmit={onSubmit} />
+                </div>
             </div> :
             <div></div>
     )

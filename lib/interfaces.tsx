@@ -8,5 +8,5 @@ export interface MessageInfo{
     msgType : string;
     msgContent : string;
     userName : string;
-    date : number
+    date : string
 }
