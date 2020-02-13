@@ -12,9 +12,8 @@ $ npm install
 
 ```bash
 # development
-$ node server.js
+$ npm run dev
 
 # production mode
-$ next build
-$ cross-env NODE_ENV=production node server.js
+$ npm run start
 ```

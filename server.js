@@ -23,7 +23,7 @@ app.prepare()
     .then(() => {
         const server = express()
 
-        if (dev && devProxy) {
+        if (devProxy) {
             Object.keys(devProxy).forEach(function(context) {
                 server.use(proxyMiddleware(context, devProxy[context]))
             })
