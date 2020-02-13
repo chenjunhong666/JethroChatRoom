@@ -60,7 +60,7 @@ const IndexPage = ({ router }) => {
                 addMessage(message)
             });
             s.on('disconnect', (data) => {
-                let message: MessageInfo = { msgType: MsgType.SYSTEM, msgContent: "退出聊天室", userName, date: new Date().toLocaleTimeString() };
+                let message: MessageInfo = { msgType: MsgType.SYSTEM, msgContent: "您已离线", userName : "", date: "" };
                 addMessage(message)
             });
             s.on('forceOut', () => {
