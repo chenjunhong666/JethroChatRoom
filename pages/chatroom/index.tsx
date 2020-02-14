@@ -58,7 +58,7 @@ const IndexPage = ({ router }) => {
                 addMessage(message)
             });
             s.on('disconnect', (data) => {
-                let message: MessageInfo = { msgType: MsgType.SYSTEM, msgContent: "您已离线", userName : "", date: "" };
+                let message: MessageInfo = { msgType: MsgType.SYSTEM, msgContent: "您已离线", userName: "", date: "" };
                 addMessage(message)
             });
             s.on('forceOut', () => {
@@ -74,13 +74,8 @@ const IndexPage = ({ router }) => {
     }, [userID]);
     return (
         (isLogin) ?
-            <div className='chatroom-bg'>
-                {/* <div className="chatroom-header">
-                    header
-                </div> */}
-                <div className="chatroom-content">
-                    <Messages messages={messages} />
-                </div>
+            <div>
+                <Messages messages={messages} />
                 <div className="chatroom-footer">
                     <MessageInput onSubmit={onSubmit} />
                 </div>

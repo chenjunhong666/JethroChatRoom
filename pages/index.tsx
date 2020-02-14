@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { withRedux } from '../lib/redux'
 import { Button, Select } from 'antd'
 import router from 'next/router';
 import routerlist from '../lib/routerlist'
-import api from '../api'
 
 const IndexPage = (props) => {
   const { Option } = Select;

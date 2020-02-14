@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { MessageInfo, MsgType } from '../lib/interfaces'
 import './messages.less'
 

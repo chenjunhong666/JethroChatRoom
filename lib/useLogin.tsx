@@ -1,6 +1,3 @@
-// import Router from 'next/router';
-// import Cookies from 'js-cookie'
-// import routerlist from '../lib/routerlist'
 import { useEffect, useState } from 'react';
 import api from '../api'
 import { useSelector, useDispatch } from 'react-redux'
