@@ -1,6 +1,5 @@
 import App from 'next/app'
 import React from 'react'
-import router from 'next/router';
 class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props

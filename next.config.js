@@ -15,7 +15,9 @@ module.exports = withLess({
     javascriptEnabled: true,
     modifyVars: themeVariables, // make your antd custom effective
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config, {
+    isServer
+  }) => {
     if (isServer) {
       const antStyles = /antd\/.*?\/style.*?/
       const origExternals = [...config.externals]
@@ -36,11 +38,26 @@ module.exports = withLess({
         use: 'null-loader',
       })
     }
+
     config.plugins.push(
       new FilterWarningsPlugin({
-          exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
+        exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
       })
-  );
+    );
+    
+    const originalEntry = config.entry
+    config.entry = async () => {
+      const entries = await originalEntry()
+
+      if (
+        entries['main.js'] &&
+        !entries['main.js'].includes('./lib/polyfills.js')
+      ) {
+        entries['main.js'].unshift('./lib/polyfills.js')
+      }
+
+      return entries
+    }
     return config
-  },
+  }
 })

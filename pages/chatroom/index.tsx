@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { withRouter } from 'next/router'
 import { withRedux } from '../../lib/redux'
 import io from 'socket.io-client'
 import useLogin from '../../lib/useLogin'
-import { Button, message, Layout } from 'antd'
 import routerlist from '../../lib/routerlist'
 import { useSelector, useDispatch } from 'react-redux'
 import MessageInput from '../../components/messageInput'
 import Messages from '../../components/messages'
 import { MessageInfo, MsgType } from '../../lib/interfaces'
 import './chatroom.less'
-const { Header, Footer, Sider, Content } = Layout;
 
 const IndexPage = ({ router }) => {
     let roomValue = ""
@@ -39,7 +37,7 @@ const IndexPage = ({ router }) => {
             router.push(routerlist.notFind);
         }
         if (userID != "") {
-            let s = io.connect('http://localhost:3001')
+            let s = io.connect('http://localhost:3001');
             setSocket(s);
             s.on('connect', (data) => {
                 // console.log('connect')
@@ -92,7 +90,8 @@ const IndexPage = ({ router }) => {
 }
 
 IndexPage.getInitialProps = async ({ reduxStore }) => {
-    return reduxStore.getState();
+    // return reduxStore.getState();
+    return {}
 }
 
 export default withRedux(withRouter(IndexPage))
